@@ -2,6 +2,8 @@ package com.example.blog_platform_api.model;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -13,12 +15,9 @@ public class User {
     private String username;
     private String password;
     private String email;
-    private ERole role;
 
-    public enum ERole {
-        ROLE_USER,
-        ROLE_ADMIN
-    }
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles;
 
     public String getUsername() {
         return username;
@@ -44,11 +43,11 @@ public class User {
         this.email = email;
     }
 
-    public ERole getRole() {
-        return role;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(ERole role) {
-        this.role = role;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }
