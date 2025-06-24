@@ -2,6 +2,8 @@ package com.example.blog_platform_api.model;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 public class Post {
 
@@ -17,8 +19,12 @@ public class Post {
     private User author;
 
     @ManyToMany
-    @JoinColumn(name = "tag_id", nullable = false)
-    private Tag tag;
+    @JoinTable(
+            name = "post_tag",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private Set<Tag> tags;
 
     public String getTitle() {
         return title;
@@ -44,11 +50,11 @@ public class Post {
         this.author = author;
     }
 
-    public Tag getTag() {
-        return tag;
+    public Set<Tag> getTags() {
+        return tags;
     }
 
-    public void setTag(Tag tag) {
-        this.tag = tag;
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 }
